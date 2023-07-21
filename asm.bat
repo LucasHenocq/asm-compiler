@@ -9,6 +9,7 @@ goto init
 ::set options=1
 ::set f=YOUR ASM FILE NAME
 ::set e=YOUR ASM FILE EXTENSION
+set entry=_start
 ::
 :: Data Folder : (basic : .asm)
 ::set dat_folder=YOUR DATA FOLDER
@@ -41,10 +42,8 @@ goto init
 ::
 :: Basic compile options :
 ::nasm -f win%%system%% %file%.%ext% -o %file%.obj 
-::golink %file%.obj /entry _start /console %%dlls%%
+::golink %file%.obj /entry %entry% /console %%dlls%%
 ::del %file%.obj 
-::
-:: Note that with this compile option the entry is _start !
 ::
 ::=========================================================::
 
