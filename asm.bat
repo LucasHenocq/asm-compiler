@@ -41,7 +41,7 @@ goto init
 ::
 :: Basic compile options :
 ::nasm -f win%%system%% %file%.%ext% -o %file%.obj 
-::golink %file%.obj /entry _start /console kernel32.dll 
+::golink %file%.obj /entry _start /console %%dlls%%
 ::del %file%.obj 
 ::
 :: Note that with this compile option the entry is _start !
