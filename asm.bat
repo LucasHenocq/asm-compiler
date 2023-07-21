@@ -3,7 +3,7 @@ goto init
 :configs
 
 
-::===================CONFIGS=====================::
+::========================CONFIGS==========================::
 ::
 :: Data Folder : (basic : .asm)
 ::set dat_folder=YOUR DATA FOLDER
@@ -19,23 +19,29 @@ goto init
 ::
 :: System (basic : x64)
 ::set system=32
+:: Info : You have to delete the data folder
+::
+:: Dlls
+::set dlls = kernel32.dll
+:: Info : You have to delete the data folder
 ::
 :: Don't delete .obj file
 ::set remobj=0
 :: Info : You have to delete the data folder
 ::
-::======================INFOS====================::
+::==========================INFOS==========================::
 ::
 :: You can change the compilation setting in :
 ::/YOUR DATA FOLDER/compiler.bat
 ::
 :: Basic compile options :
-::
-::nasm -f win64 %file%.%ext% -o %file%.obj 
+::nasm -f win%%system%% %file%.%ext% -o %file%.obj 
 ::golink %file%.obj /entry _start /console kernel32.dll 
 ::del %file%.obj 
 ::
-::===============================================::
+:: Note that with this compile option the entry is _start !
+::
+::=========================================================::
 
 goto start
 
@@ -50,7 +56,7 @@ mkdir %dat_folder%
 echo %f%>%dat_folder%/file.dat
 echo %e%>%dat_folder%/ext.dat
 echo nasm -f win%%system%% %%file%%.%%ext%% -o %%file%%.obj >%dat_folder%/compile.bat
-echo golink %%file%%.obj /entry _start /console kernel32.dll >>%dat_folder%/compile.bat
+echo golink %%file%%.obj /entry _start /console %%dlls%% >>%dat_folder%/compile.bat
 if %remobj% == 1 echo del %%file%%.obj >>%dat_folder%/compile.bat
 for /F "tokens=1-4 delims=:.," %%a in ("%time%") do (
    set /A "end=(((%%a*60)+1%%b %% 100)*60+1%%c %% 100)*100+1%%d %% 100"
@@ -133,6 +139,7 @@ set remexe=0
 set remasm=0
 set remobj=1
 set system=64
+set dlls = kernel32.dll
 goto configs
 
 :end
