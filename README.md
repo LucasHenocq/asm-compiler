@@ -7,4 +7,4 @@ Probably not perfect I don't care.
 Put the asm.bat file wherever you want.<br>
 Go in options and just configure it if you want.
 
-
+<img src="assets/options.png">
