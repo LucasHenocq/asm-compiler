@@ -6,9 +6,9 @@ goto init
 ::========================CONFIGS==========================::
 ::
 :: ASM File option (optional)
-::set options=1
-::set f=YOUR ASM FILE NAME
-::set e=YOUR ASM FILE EXTENSION
+set options=1
+set file_name=main
+set file_ext=asm
 set entry=_start
 ::
 :: Data Folder : (basic : .asm)
@@ -51,16 +51,16 @@ goto start
 
 :data
 
-if %options%==0 set /p f=File name : 
-if %options%==0 set /p e=ASM extension : 
+if %options%==0 set /p file_name=File name : 
+if %options%==0 set /p file_ext=ASM extension : 
 for /F "tokens=1-4 delims=:.," %%a in ("%time%") do (
    set /A "start=(((%%a*60)+1%%b %% 100)*60+1%%c %% 100)*100+1%%d %% 100"
 )
 mkdir %dat_folder%
-echo %f%>%dat_folder%/file.dat
-echo %e%>%dat_folder%/ext.dat
+echo %file_name%>%dat_folder%/file.dat
+echo %file_ext%>%dat_folder%/ext.dat
 echo nasm -f win%%system%% %%file%%.%%ext%% -o %%file%%.obj >%dat_folder%/compile.bat
-echo golink %%file%%.obj /entry _start /console %%dlls%% >>%dat_folder%/compile.bat
+echo golink %%file%%.obj /entry %%entry%% /console %%dlls%% >>%dat_folder%/compile.bat
 if %remobj% == 1 echo del %%file%%.obj >>%dat_folder%/compile.bat
 for /F "tokens=1-4 delims=:.," %%a in ("%time%") do (
    set /A "end=(((%%a*60)+1%%b %% 100)*60+1%%c %% 100)*100+1%%d %% 100"
@@ -144,6 +144,7 @@ set remexe=0
 set remasm=0
 set remobj=1
 set system=64
+set entry=_start
 set dlls = kernel32.dll
 goto configs
 
