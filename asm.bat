@@ -28,7 +28,7 @@ set entry=_start
 :: Info : You have to delete the data folder
 ::
 :: Dlls
-::set dlls = kernel32.dll
+set dlls=kernel32.dll
 :: Info : You have to delete the data folder
 ::
 :: Don't delete .obj file
@@ -145,7 +145,6 @@ set remasm=0
 set remobj=1
 set system=64
 set entry=_start
-set dlls = kernel32.dll
 goto configs
 
 :end
