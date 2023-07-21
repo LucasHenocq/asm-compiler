@@ -18,7 +18,7 @@ goto init
 ::set remasm=1
 ::
 :: System (basic : x64)
-set system=64
+::set system=32
 ::
 :: Don't delete .obj file
 ::set remobj=0
@@ -132,6 +132,7 @@ set pause=0
 set remexe=0
 set remasm=0
 set remobj=1
+set system=64
 goto configs
 
 :end
