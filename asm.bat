@@ -5,6 +5,11 @@ goto init
 
 ::========================CONFIGS==========================::
 ::
+:: ASM File option (optional)
+::set options=1
+::set f=YOUR ASM FILE NAME
+::set e=YOUR ASM FILE EXTENSION
+::
 :: Data Folder : (basic : .asm)
 ::set dat_folder=YOUR DATA FOLDER
 ::
@@ -47,8 +52,8 @@ goto start
 
 :data
 
-set /p f=File name : 
-set /p e=ASM extension : 
+if %options%==0 set /p f=File name : 
+if %options%==0 set /p e=ASM extension : 
 for /F "tokens=1-4 delims=:.," %%a in ("%time%") do (
    set /A "start=(((%%a*60)+1%%b %% 100)*60+1%%c %% 100)*100+1%%d %% 100"
 )
@@ -134,6 +139,7 @@ goto end
 :init
 
 set dat_folder=.asm
+set options=0
 set pause=0
 set remexe=0
 set remasm=0
