@@ -1,6 +1,10 @@
 # ASM compiler
 
 Just a basic compiler for people Who wants to code in asm but are to lazy to compile it.<br>
-Probably not perfect I don't care
+Probably not perfect I don't care.
 
-Go in options and just configure it
+# Installation :
+Put the asm.bat file wherever you want.<br>
+Go in options and just configure it if you want.
+
+
