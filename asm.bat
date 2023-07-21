@@ -17,6 +17,9 @@ goto init
 :: Removal of the asm file
 ::set remasm=1
 ::
+:: System (basic : x64)
+set system=64
+::
 :: Don't delete .obj file
 ::set remobj=0
 :: Info : You have to delete the data folder
@@ -46,7 +49,7 @@ for /F "tokens=1-4 delims=:.," %%a in ("%time%") do (
 mkdir %dat_folder%
 echo %f%>%dat_folder%/file.dat
 echo %e%>%dat_folder%/ext.dat
-echo nasm -f win64 %%file%%.%%ext%% -o %%file%%.obj >%dat_folder%/compile.bat
+echo nasm -f win%%system%% %%file%%.%%ext%% -o %%file%%.obj >%dat_folder%/compile.bat
 echo golink %%file%%.obj /entry _start /console kernel32.dll >>%dat_folder%/compile.bat
 if %remobj% == 1 echo del %%file%%.obj >>%dat_folder%/compile.bat
 for /F "tokens=1-4 delims=:.," %%a in ("%time%") do (
