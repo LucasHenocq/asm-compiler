@@ -12,7 +12,7 @@ set file_ext=asm
 set entry=_start
 ::
 :: Data Folder : (basic : .asm)
-::set dat_folder=YOUR DATA FOLDER
+::set dat_folder=YOUR\DATA\FOLDER
 ::
 :: Pause At The End :
 ::set pause=1
@@ -29,6 +29,8 @@ set entry=_start
 ::
 :: Save asm file
 set save=1
+set save_folder=save
+:: Set on \(DATA FOLDER)\save
 ::
 :: System (x64 or x32)
 set system=64
@@ -65,7 +67,7 @@ echo %file_ext%>%dat_folder%/ext.dat
 echo nasm -f win%%system%% %%file%%.%%ext%% -o %%file%%.obj >%dat_folder%/compile.bat
 echo golink %%file%%.obj /entry %%entry%% /console %%dlls%% >>%dat_folder%/compile.bat
 if %remobj% == 1 echo del %%file%%.obj >>%dat_folder%/compile.bat
-mkdir %dat_folder%\save
+mkdir %dat_folder%\%save_folder%
 for /F "tokens=1-4 delims=:.," %%a in ("%time%") do (
    set /A "end=(((%%a*60)+1%%b %% 100)*60+1%%c %% 100)*100+1%%d %% 100"
 )
@@ -149,6 +151,7 @@ set remasm=0
 set remobj=1
 set system=64
 set save=0
+set save_folder=save
 set entry=_start
 goto configs
 
@@ -168,7 +171,7 @@ set CUR_NN=%time:~3,2%
 set CUR_SS=%time:~6,2%
 set CUR_MS=%time:~9,2%
 set CUR_TIME=%CUR_HH%%CUR_NN%%CUR_SS%
-copy %file%.%ext% %dat_folder%\save\%file%-%CUR_DATE%-%CUR_TIME: =%.%ext%
+copy %file%.%ext% %dat_folder%\%save_folder%\%file%-%CUR_DATE%-%CUR_TIME: =%.%ext%
 set save=0
 
 goto end
