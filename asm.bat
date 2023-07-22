@@ -23,16 +23,19 @@ set entry=_start
 :: Removal of the asm file
 ::set remasm=1
 ::
-:: System (basic : x64)
-::set system=32
+:: Let .obj file in the folder
+::set remobj=0
+:: Info : You have to delete the data folder
+::
+:: Save asm file
+set save=1
+::
+:: System (x64 or x32)
+set system=64
 :: Info : You have to delete the data folder
 ::
 :: Dlls
 set dlls=kernel32.dll
-:: Info : You have to delete the data folder
-::
-:: Don't delete .obj file
-::set remobj=0
 :: Info : You have to delete the data folder
 ::
 ::==========================INFOS==========================::
@@ -62,6 +65,7 @@ echo %file_ext%>%dat_folder%/ext.dat
 echo nasm -f win%%system%% %%file%%.%%ext%% -o %%file%%.obj >%dat_folder%/compile.bat
 echo golink %%file%%.obj /entry %%entry%% /console %%dlls%% >>%dat_folder%/compile.bat
 if %remobj% == 1 echo del %%file%%.obj >>%dat_folder%/compile.bat
+mkdir %dat_folder%\save
 for /F "tokens=1-4 delims=:.," %%a in ("%time%") do (
    set /A "end=(((%%a*60)+1%%b %% 100)*60+1%%c %% 100)*100+1%%d %% 100"
 )
@@ -88,7 +92,7 @@ for /F "tokens=1-4 delims=:.," %%a in ("%time%") do (
 )
 
 :: Compilator // You can change it with your tools
-call .asm\compile.bat
+call %dat_folder%\compile.bat
 
 :: Time at the end of the compilation
 for /F "tokens=1-4 delims=:.," %%a in ("%time%") do (
@@ -144,13 +148,27 @@ set remexe=0
 set remasm=0
 set remobj=1
 set system=64
+set save=0
 set entry=_start
 goto configs
 
 :end
 
+if %save% == 1 goto copy_file
 if %pause% == 1 pause
 if %remexe% == 1 del %file%.exe
 if %remasm% == 1 del %file%.%ext%
 
 exit
+
+:copy_file
+set CUR_DATE=%DATE:/=-%
+set CUR_HH=%time:~0,2%
+set CUR_NN=%time:~3,2%
+set CUR_SS=%time:~6,2%
+set CUR_MS=%time:~9,2%
+set CUR_TIME=%CUR_HH%%CUR_NN%%CUR_SS%
+copy %file%.%ext% %dat_folder%\save\%file%-%CUR_DATE%-%CUR_TIME: =%.%ext%
+set save=0
+
+goto end
